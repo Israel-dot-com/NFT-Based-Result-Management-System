@@ -55,7 +55,7 @@ async function buyNFT(tokenId) {
         //Pull the deployed contract instance
         let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
         const salePrice = ethers.utils.parseUnits(data.price, 'ether')
-        updateMessage("Buying the NFT... Please Wait (Upto 5 mins)")
+        updateMessage("Getting this Result ... Please Wait (Upto 5 mins)")
         //run the executeSale function
         let transaction = await contract.executeSale(tokenId, {value:salePrice});
         await transaction.wait();
@@ -76,10 +76,13 @@ async function buyNFT(tokenId) {
         data.image = GetIpfsUrlFromPinata(data.image);
 
     return(
-        <div style={{"min-height":"100vh"}}>
-            <Navbar></Navbar>
+        <div style={{"min-height":"100vh"}} className="flex flex-row">
+            <div className="">
+                <Navbar></Navbar>
+            </div>
+            
             <div className="flex ml-20 mt-20">
-                <img src={data.image} alt="" className="w-2/5" />
+                <img src={data.image} alt="" className="w-2/5 object-contain" />
                 <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5">
                     <div>
                         Name: {data.name}
@@ -91,14 +94,14 @@ async function buyNFT(tokenId) {
                         Price: <span className="">{data.price + " ETH"}</span>
                     </div>
                     <div>
-                        Owner: <span className="text-sm">{data.owner}</span>
+                        School Address: <span className="text-sm">{data.owner}</span>
                     </div>
                     <div>
-                        Seller: <span className="text-sm">{data.seller}</span>
+                        Student address: <span className="text-sm">{data.seller}</span>
                     </div>
                     <div>
                     { currAddress != data.owner && currAddress != data.seller ?
-                        <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
+                        <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Send this Result to Wallet</button>
                         : <div className="text-emerald-700">You are the owner of this NFT</div>
                     }
                     
